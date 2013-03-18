@@ -118,7 +118,8 @@ class Scraper(scrapelib.Scraper):
     def _load_schemas(self):
         """ load all schemas into schema dict """
 
-        types = ('bill', 'committee', 'person', 'vote', 'event', 'speech')
+        types = ('bill', 'committee', 'person', 'vote', 'event', 'speech',
+                 'expenditure')
 
         for type in types:
             schema_path = os.path.join(os.path.split(__file__)[0],

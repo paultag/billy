@@ -1,0 +1,30 @@
+{"description": "expenditure data",
+ "type": "object",
+ "properties": {
+    "_type": {"type": "string", "enum": ["expenditure"]},
+    "fiscal_year": {"type": "string", "minLength": 4},
+    "expenditure_type": {"type": "string", "enum": ["transactional", "aggregated"]},
+    "spending_type": {"type": "string", "enum": ["salary", "contract", "grant", "pension",
+        "general_expenditure", "tax_expenditure"]},
+    "recipient_name": {"type": "string", "minLength": 1},
+    "amount": {"type": "integer"},
+    "recipient_address": {"type": "string", "minLength": 1, "required": false},
+    "recipient_phone_number": {"type": "string", "minLength": 1, "required": false},
+    "recipient_city": {"type": "string", "minLength": 1, "required": false},
+    "recipient_county": {"type": "string", "minLength": 1, "required": false},
+    "recipient_zip": {"type": "string", "minLength": 1, "required": false},
+    "recipient_state": {"type": "string", "minLength": 1, "required": false},
+    "description": {"type": "string", "minLength": 1, "required": false},
+    "category_code": {"type": "string", "minLength": 1, "required": false},
+    "account_number": {"type": "string", "minLength": 1, "required": false},
+    "fund_name": {"type": "string", "minLength": 1, "required": false},
+    "fund_number": {"type": "string", "minLength": 1, "required": false},
+    "agency_name": {"type": "string", "minLength": 1, "required": false},
+    "agency_number": {"type": "string", "minLength": 1, "required": false},
+    "sub_agency_name": {"type": "string", "minLength": 1, "required": false},
+    "sub_agency_number": {"type": "string", "minLength": 1, "required": false},
+    "sources": {"type": "array", "items": {"type": "object", "properties": {
+        "url": {"type": "string"}
+    }}, "minItems": 1 }
+ }
+}
