@@ -96,7 +96,7 @@ class Scraper(scrapelib.Scraper):
         self.output_names = set()
 
         # make output_dir
-        os.path.isdir(self.output_dir) or os.path.makedirs(self.output_dir)
+        os.path.isdir(self.output_dir) or os.makedirs(self.output_dir)
 
         # validation
         self.strict_validation = strict_validation
@@ -134,10 +134,11 @@ class Scraper(scrapelib.Scraper):
             self.all_sessions()
 
         # legislators
-        terms = [t['name'] for t in self.metadata['terms']]
-        # ugly break here b/c this line is nearly impossible to split
-        self._schema['person']['properties']['roles'][
-            'items']['properties']['term']['enum'] = terms
+        if self.metadata:
+            terms = [t['name'] for t in self.metadata['terms']]
+            # ugly break here b/c this line is nearly impossible to split
+            self._schema['person']['properties']['roles'][
+                'items']['properties']['term']['enum'] = terms
 
     @property
     def object_count(self):
@@ -154,8 +155,9 @@ class Scraper(scrapelib.Scraper):
 
     def all_sessions(self):
         sessions = []
-        for t in self.metadata['terms']:
-            sessions.extend(t['sessions'])
+        if self.metadata:
+            for t in self.metadata['terms']:
+                sessions.extend(t['sessions'])
         return sessions
 
     def validate_session(self, session, latest_only=False):

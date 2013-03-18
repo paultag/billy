@@ -22,6 +22,7 @@ setup(name='billy',
       entry_points="""[console_scripts]
 billy-update = billy.bin.update:main
 billy-util = billy.bin.util:main
+billy-expenditures = billy.bin.expenditures:main
 """,
       install_requires=[
           "Django>=1.4.2",
