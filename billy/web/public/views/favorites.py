@@ -34,17 +34,11 @@ class Favorites(dict):
     def has_legislators(self):
         return self.favorites_exist('legislator')
 
-    def has_committees(self):
-        return self.favorites_exist('committee')
-
     def has_searches(self):
         return self.favorites_exist('search')
 
     def legislator_objects(self):
         return [obj['obj'] for obj in self.get('legislator', [])]
-
-    def committee_objects(self):
-        return [obj['obj'] for obj in self.get('committee', [])]
 
 
 class FavoritedSearch(dict):
@@ -102,7 +96,6 @@ class FavoritedSearch(dict):
 def _get_favorite_object(favorite):
     collection_name = {
         'bill': 'bills',
-        'committee': 'committees',
         'legislator': 'legislators',
     }.get(favorite['obj_type'])
     if collection_name is not None:
@@ -164,14 +157,13 @@ def favorites(request):
     return render(request, templatename('user_favorites'),
                   dict(favorites=favorites,
                        profile=profile,
-                       legislators=favorites.legislator_objects(),
-                       committees=favorites.committee_objects()))
+                       legislators=favorites.legislator_objects()))
 
 
 @login_required
 @require_http_methods(["POST"])
 def set_favorite(request):
-    '''Follow/unfollow a bill, committee, legislator.
+    '''Follow/unfollow a bill, legislator.
     '''
     # Complain about bogus requests.
     resp400 = HttpResponse(status=400)
@@ -179,7 +171,7 @@ def set_favorite(request):
                       'search_params', 'search_abbr'])
     if not set(request.POST) <= valid_keys:
         return resp400
-    valid_types = ['bill', 'legislator', 'committee', 'search']
+    valid_types = ['bill', 'legislator', 'search']
     if request.POST['obj_type'] not in valid_types:
         return resp400
 
@@ -224,7 +216,7 @@ def set_notification_preference(request):
 
     # Get the obj_type
     obj_type = request.POST.get('obj_type')
-    valid_types = ['bill', 'legislator', 'committee', 'search']
+    valid_types = ['bill', 'legislator', 'search']
     if obj_type not in valid_types:
         return resp400
 
