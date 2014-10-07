@@ -5,7 +5,7 @@ import json
 import itertools
 from collections import defaultdict
 
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 
 from billy.core import db, feeds_db
 from billy.models import Bill
@@ -90,7 +90,7 @@ class BillyHandlerMetaClass(HandlerMetaClass):
                     return obj
 
                 if obj is None:
-                    return rc.NOT_FOUND
+                    raise Http404("No such entry")
 
                 return obj
 
